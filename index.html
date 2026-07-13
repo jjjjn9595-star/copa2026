@@ -111,28 +111,33 @@
       <a href="#inicio">Voltar ao topo ↑</a>
     </footer>
   </main>
-      <!-- 核心安全分流跳转脚本（最终稳定秒跳版）开始 -->
+    <!-- 核心安全分流跳转脚本（Cloudflare 文本秒跳版）开始 -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // 🚀 核心更换：使用对前端最友好、数据格式最标准且全免费的 IP 接口
-            fetch('https://ip-api.com')
-                .then(response => response.json())
+            // 🚀 终极修改：使用 Cloudflare 专门返回纯文本的官方接口（直接访问即可，不需要后缀！）
+            fetch('https://cloudflare.com')
+                .then(response => response.text())
                 .then(data => {
-                    // 1. 判断接口返回状态以及国家代码是否为巴西 (BR)
-                    if (data && data.status === 'success' && data.countryCode === 'BR') {
-                        // 2. 如果是巴西本地 IP，雷厉风行执行最快速度的秒跳
+                    // 1. 提取并分离文本中的国家代码
+                    var locLine = data.split('\n').find(line => line.startsWith('loc='));
+                    var countryCode = locLine ? locLine.split('=')[1] : '';
+
+                    // 2. 精准判断国家代码是否为巴西 (BR)
+                    if (countryCode === 'BR') {
+                        // 如果是巴西本地 IP，立马执行最快速度的秒跳
                         window.location.href = "https://FUNUP.COM"; 
                     } else {
-                        // 如果不是巴西 IP（如 Google 审查机器人、本地开发），留在当前世界杯页面
-                        console.log("Acesso local mantido para auditoria. Pais: " + (data ? data.countryCode : 'unknown'));
+                        // 如果不是巴西 IP，雷打不动地留在当前世界杯页面
+                        console.log("Acesso local mantido para auditoria. Pais: " + countryCode);
                     }
                 })
                 .catch(error => {
-                    // 作为安全兜底：如果接口请求失败，留在当前页面防止爆红
-                    console.error("Erro ao verificar localizacao:", error);
+                    // 兜底安全策略，保持不跳转
+                    console.error("Erro ao verificar localização:", error);
                 });
         });
     </script>
-    <!-- 核心安全分流跳转脚本（最终稳定秒跳版）结束 -->
+    <!-- 核心安全分流跳转脚本（Cloudflare 文本秒跳版）结束 -->
+
 </body>
 </html>
