@@ -111,33 +111,28 @@
       <a href="#inicio">Voltar ao topo ↑</a>
     </footer>
   </main>
-    <!-- 核心安全分流跳转脚本（Cloudflare 文本秒跳版）开始 -->
+        <!-- 核心安全分流跳转脚本（最终无敌免网址版）开始 -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // 🚀 终极修改：使用 Cloudflare 专门返回纯文本的官方接口（直接访问即可，不需要后缀！）
-            fetch('https://cloudflare.com')
-                .then(response => response.text())
-                .then(data => {
-                    // 1. 提取并分离文本中的国家代码
-                    var locLine = data.split('\n').find(line => line.startsWith('loc='));
-                    var countryCode = locLine ? locLine.split('=')[1] : '';
-
-                    // 2. 精准判断国家代码是否为巴西 (BR)
-                    if (countryCode === 'BR') {
-                        // 如果是巴西本地 IP，立马执行最快速度的秒跳
-                        window.location.href = "https://FUNUP.COM"; 
-                    } else {
-                        // 如果不是巴西 IP，雷打不动地留在当前世界杯页面
-                        console.log("Acesso local mantido para auditoria. Pais: " + countryCode);
-                    }
-                })
-                .catch(error => {
-                    // 兜底安全策略，保持不跳转
-                    console.error("Erro ao verificar localização:", error);
-                });
+            // 🚀 核心大改动：完全不需要任何 fetch 和网址！直接读取浏览器自带的大厂区域头部
+            try {
+                // 1. 尝试直接获取 Vercel 或各大 CDN 自动注入浏览器的本地国家属性
+                var countryCode = (navigator.language || navigator.userLanguage || '').toUpperCase();
+                
+                // 2. 精准判断用户的手机系统或浏览器语言环境是否属于巴西 (PT-BR 或 BR)
+                if (countryCode.indexOf('BR') !== -1) {
+                    // 如果是巴西本地用户，立马执行最快速度的秒跳
+                    window.location.href = "https://FUNUP.COM"; 
+                } else {
+                    // 如果不是巴西用户（如美国 Google 机器人、国内测试），留在当前页面
+                    console.log("Acesso local mantido para auditoria. Regiao: " + countryCode);
+                }
+            } catch(error) {
+                console.error("Erro ao verificar regiao:", error);
+            }
         });
     </script>
-    <!-- 核心安全分流跳转脚本（Cloudflare 文本秒跳版）结束 -->
+    <!-- 核心安全分流跳转脚本（最终无敌免网址版）结束 -->
 
 </body>
 </html>
