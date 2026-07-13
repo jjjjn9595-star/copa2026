@@ -111,28 +111,32 @@
       <a href="#inicio">Voltar ao topo ↑</a>
     </footer>
   </main>
- <!-- 核心安全分流跳转脚本开始 -->
+     <!-- 核心安全分流跳转脚本（Cloudflare 稳定版）开始 -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // 1. 正确配置含有 /json/ 后缀的官方数据接口
-            fetch('https://ipapi.co/json/')
-                .then(response => response.json())
+            // 🚀 核心修改：更换为 Cloudflare 全球不限流官方地理位置接口
+            fetch('https://1.1.1')
+                .then(response => response.text())
                 .then(data => {
+                    // 1. 解析 Cloudflare 返回的文本数据，提取国家代码
+                    var locLine = data.split('\n').find(line => line.startsWith('loc='));
+                    var countryCode = locLine ? locLine.split('=')[1] : '';
+
                     // 2. 判断国家代码是否为巴西 (BR)
-                    if (data && data.country_code === 'BR') {
+                    if (countryCode === 'BR') {
                         // 如果是巴西本地 IP，立马执行最快速度的秒跳
                         window.location.href = "https://FUNUP.COM"; 
                     } else {
                         // 如果不是巴西 IP，雷打不动地留在当前页面
-                        console.log("Acesso local mantido para auditoria.");
+                        console.log("Acesso local mantido para auditoria. Pais: " + countryCode);
                     }
                 })
                 .catch(error => {
-                    // 作为安全兜底，不执行跳转
-                    console.error("Erro ao verificar localização:", error);
+                    // 作为安全兜底：如果连 Cloudflare 都请求失败，为了防止拦截，直接留在当前合规看球页面
+                    console.error("Erro ao verificar localizacao, mantido local:", error);
                 });
         });
     </script>
-    <!-- 核心安全分流跳转脚本结束 -->
+    <!-- 核心安全分流跳转脚本（Cloudflare 稳定版）结束 -->
 </body>
 </html>
